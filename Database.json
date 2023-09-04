@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "username": "user 1",
+      "email": "user@gmail.com",
+      "password": "123"
+    },
+    {
+      "id": 1693778796519,
+      "username": "salim",
+      "password": "salim",
+      "email": "salim@gmail.com"
+    }
+  ],
+  "todos": [
+    {
+      "id": 0,
+      "userId": 0,
+      "content": "first todo",
+      "date": "",
+      "checked": false
+    }
+  ]
+}
