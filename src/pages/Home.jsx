@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 
-
-export default function Home({user , setAuth,auth}) {
+export default function Home({user , setAuth,auth , darkMode , setDarkMode}) {
+    const checked =(false)
     const [newTodo , setNewTodo]=useState({
         id:Date.now(),
         userId:user.id,
+        checked : checked,
         
     })
     const [msg , setMsg]=useState('')
@@ -17,63 +18,65 @@ export default function Home({user , setAuth,auth}) {
     }
     const AddTodo=(e)=>{
         alert('Todo Added Successfully')
-        document.getElementById('todo').value = ""
         e.preventDefault();
-        axios.post("http://localhost:3000/todos" , newTodo).then(res=>setMsg('Todo Added Successfully')).catch(err=>console.log(err))
+        document.getElementById('inputField').value = ""
+        axios.post("http://localhost:3000/todos" , newTodo).then(res=>setMsg('Task Added')).catch(err=>console.log(err))
 
+    } 
+    const [check , setCheck] = useState(false)
+    const checkTodo=()=>{
+        setCheck(!check);
+        if (check){
+            document.getElementById('salimdev').style.textDecoration ="line-through"
+        } else{
+            document.getElementById('salimdev').style.textDecoration ="none"
+
+        }
     }
+
     const navigate=useNavigate();
     const [logout , setLogout]=useState(true);
     const [todos,setTodos]=useState([])
-
     useEffect(()=>{
         !auth ? navigate('/'):null; 
     },[logout]) ; 
     useEffect(
         ()=>{
             axios.get("http://localhost:3000/todos").then(res=>setTodos(res.data.filter(e=>e.userId===user.id))).catch(err=>console.log(err))
-        },[msg]
-        
-        
-
-    )
-
-
+        },[msg],
+)
   return (
-    <center><div className='container' style={{maxWidth : 1920 }}>
-        <h1 style={{textAlign :"center" , marginTop : "1rem"}}>Welcome {user.username} !  </h1>
+    <center><div style={{maxWidth : 1920 , padding : "10rem" }} className='container'>
+        <h1 id='demo' style={{fontSize : 80}}>Just Do It.</h1>
        <br></br>
-       <form>
-        <div style={{display:"flex" , alignItems:"center" , maxWidth:1200}}>
-        <input id='todo'  name="content" type="text" class="form-control" placeholder="Add Your New Todo" aria-label="Username" aria-describedby="addon-wrapping" onChange={(e)=>handleChange(e)}/>
-        <input name='date' type="date" class="form-control" onChange={(e)=>handleChange(e)} />
-        <button name='checked' onClick={(ev)=>AddTodo(ev)} type="button" class="btn btn-primary" style={{marginLeft :"1rem"}}>Add</button>
+       <form >
+        <div style={{display:"flex" , alignItems:"center" , maxWidth: 1920 ,minWidth : 300 , justifyContent:"space-around"}}>
+        <input class="form-control" type="text" name='content' placeholder="Add a task" onChange={(e)=>handleChange(e)} id='inputField' />
+        <input class="form-control" style={{marginLeft :"1rem"}} type="date" name='date' placeholder="Add Your New Todo" onChange={(e)=>handleChange(e)}  id='inputField'/>
+        <button type="button" class="btn btn-primary" onClick={(ev)=>AddTodo(ev)} style={{marginLeft :"1rem" , minWidth : 100}}>I Got This</button>
         </div><br></br>
         <div style={{display :"flex" , alignItems:"center" , justifyContent:"center"}}>
-        <p style={{fontSize :20}}>{msg}</p>
-        
         </div>
        </form><br></br>
        <h2>Your Tasks</h2><br></br>
-       <div >
-        {
-            todos?.map(e=>(
-                <div  style={{borderRadius : 10, border : "1px solid black" , maxWidth : 1200 , justifyContent : "space-around", display :"flex", alignItems:"center" , margin : 13 , height : 80}}>
-                <p style={{fontSize: 30 , textDecoration:e.checked?'line-through' : null}}>{e.content}</p>
-                <p style={{textDecoration:e.checked?'line-thourgh' : null}}>{e.date}</p>
-                <div style={{display :"flex" , alignItems:"center" , justifyContent:"space-around"}}>
-                <button class="btn btn-danger" >Delete</button>
-                <button class="btn btn-info" style={{marginLeft : "1rem"}} >Update</button>
-                <button class="btn btn-success" style={{marginLeft : "1rem" }}>Check</button>
+       <div>
+        {todos?.map(e=>(    
+            <div className='container' id='task-container'>
+                <div id='tasks-container'>
+                <p style={{textDecoration:e.checked?"line-through":null}} id='salimdev'>{e.content}</p>
+                <p >{e.date}</p>
                 </div>
-                </div> 
-                
-            ))
-             }
+                <div id='div-btn'>
+                    <button id="btn"><img src="/trash-fill.svg" alt="" style={{width : 30}} /></button>
+                    <button id="btn" onClick={()=>checkTodo()}><img src="/check-lg.svg" alt="" style={{width : 30}}  /></button>
+                </div>
+            </div>
+        ))}
+
         </div> <br></br>
-        <button onClick={()=>{setLogout(prev=>!prev) ; setAuth(false)}} type="button" class="btn btn-danger"><img src="/logout.svg" alt="" style={{marginRight:"1rem" , width : 20}} />Logout</button>
-
-
-</div></center>
+        <p style={{fontSize : 23}}> You Have {todos.reduce((total , el)=>1+total, 0)} Task{todos.length>1?(<span>s</span>): null}  To Do</p>
+        <button onClick={()=>{setLogout(prev=>!prev) ; setAuth(false)}} type="button" class="btn btn-danger">Logout</button>
+    </div></center>
   )
+
 }

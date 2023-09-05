@@ -21,19 +21,9 @@ export default function Add() {
         console.log(x)
         input.value = ""
         inputdate.value = ""
-
-
   }
-      
   return (
     <div style={{marginTop : "1.5rem" , display :"flex", justifyContent:"center" , maxWidth : 1200}}>
-        {/* <center><form onSubmit={(event)=>handleSubmit(event)}>
-            <input class="addtodo" type='text' placeholder='Add your new todo '  onChange={(e)=>setNewTodo({id:Date.now() , description:e.target.value , checked:false})} />
-            <input  class="addtodo" type='date' placeholder='add date' onChange={(e)=>setNewTodo((prev)=>{return {...prev , date:e.target.value}})}  />
-            <button class="submit" onClick={(event)=>handleSubmit(event)} >Add</button>
-            {/* {console.log(newTodo)} */}
-
-            {/* </form></center> */} 
         <div style={{display :"flex" , alignItems:"center" , justifyContent:"center" }} id='salim'>
       <Form.Control
         type="text"

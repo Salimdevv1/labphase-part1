@@ -11,6 +11,23 @@
       "username": "salim",
       "password": "salim",
       "email": "salim@gmail.com"
+    },
+    {
+      "id": 1693921441114,
+      "username": "salimslama",
+      "password": "salim",
+      "email": "salimslama@gmail.com"
+    },
+    {
+      "id": 1693928847178,
+      "username": "unknown",
+      "email": "unknown@gmail.com"
+    },
+    {
+      "id": 1693929125996,
+      "username": "salima",
+      "email": "salima@gmail.com",
+      "password": "salima"
     }
   ],
   "todos": [
@@ -20,6 +37,20 @@
       "content": "first todo",
       "date": "",
       "checked": false
+    },
+    {
+      "id": 1693928029354,
+      "userId": 1693778796519,
+      "checked": false,
+      "content": "dzqdqdqdqd",
+      "date": "2023-09-15"
+    },
+    {
+      "id": 1693928071747,
+      "userId": 1693778796519,
+      "checked": false,
+      "content": "salim dev ",
+      "date": "2023-09-12"
     }
   ]
 }
